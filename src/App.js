@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import React,{useState,useEffect} from 'react';
 
 function App() {
+  var [array,setArray] = useState([4,2,1,6,9,7,3,8]);
+  var toSortArray = array;
+  var size = 8;
+
+  useEffect(()=>{
+  console.log("rendered");
+  },[array]);
+
+  const bubblesort=()=>{
+    for(let i=0;i<size;i++){
+    for(let j=0;j<size;j++){
+    if(toSortArray[i]<toSortArray[j]){
+      var swap=toSortArray[i];
+        toSortArray[i]=toSortArray[j];
+        toSortArray[j]=swap;
+        setArray([...toSortArray]);
+        }
+      }
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {array.map(element=><div className="App" style={{height:element*10}}></div>)}
+      <div>
+        {array}
+        <button onClick={()=>bubblesort()}>sort</button>
+      </div>
     </div>
   );
 }
