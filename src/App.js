@@ -1,33 +1,71 @@
-import './App.css';
-import React,{useState,useEffect} from 'react';
+import "./App.css";
+import React, { useState, useEffect, useRef } from "react";
 
 function App() {
-  var [array,setArray] = useState([4,2,1,6,9,7,3,8]);
-  var toSortArray = array;
-  var size = 8;
+  var [array, setArray] = useState([]);
+  var size = array.length;
+  const timeoutRef = useRef();
+  var [i,setI] = useState(0);
+  var [j,setJ] = useState(0);
 
   useEffect(()=>{
-  console.log("rendered");
-  },[array]);
+    if(i<size && j <size){
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        bubblesort();
+      }, 500); 
+    }  
+  },[i,j,size]);
 
-  const bubblesort=()=>{
-    for(let i=0;i<size;i++){
-    for(let j=0;j<size;j++){
-    if(toSortArray[i]<toSortArray[j]){
-      var swap=toSortArray[i];
-        toSortArray[i]=toSortArray[j];
-        toSortArray[j]=swap;
-        setArray([...toSortArray]);
-        }
+  const handleChange = (e) => {
+    var str = e.target.value;
+    setArray(str.split(",").map((i) => Number(i)));
+  };
+
+  const bubblesort = () => {
+    var dataArray = [...array];
+    
+    if(j === size-i-1){
+      setJ(0);
+      setI(i+1);
+    }
+    var swap = dataArray[j];
+    if(i<size-1 && j<size-i-1){
+      if(swap > dataArray[j+1]){
+      dataArray[j]=dataArray[j+1];
+      dataArray[j+1] = swap;
+      setArray(dataArray);
+      setJ(j+1); 
+      }
+      else{
+        setJ(j+1);
       }
     }
+  
+  };
+
+  const reset = () =>{
+    setArray([]);
+    document.getElementById('input').value = "";
   }
   return (
-    <div className="container">
-      {array.map(element=><div className="App" style={{height:element*10}}></div>)}
-      <div>
-        {array}
-        <button onClick={()=>bubblesort()}>sort</button>
+    <div>
+      <div className="container">
+        <label className="label">Enter the values as array</label>
+        <input id="input" className="input" type="text" onChange={handleChange} />
+        <button className="button" onClick={() => bubblesort()}>
+          sort
+        </button >
+        <button className="button" onClick={() => reset()}>
+          reset
+        </button>
+      </div>
+      <div style={{ textAlign: "center" }}>
+        {array.map((element) => (
+          <div className="App" style={{ height: (element + 1) * 10 }}>
+            {element}
+          </div>
+        ))}
       </div>
     </div>
   );
