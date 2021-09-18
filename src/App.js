@@ -9,13 +9,11 @@ function App() {
   var [j,setJ] = useState(0);
 
   useEffect(()=>{
-    if(i<size && j <size){
       clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         bubblesort();
       }, 500); 
-    }  
-  },[i,j,size]);
+  },[i,j]);
 
   const handleChange = (e) => {
     var str = e.target.value;
@@ -24,12 +22,13 @@ function App() {
 
   const bubblesort = () => {
     var dataArray = [...array];
+    var swap = dataArray[j];
     
     if(j === size-i-1){
       setJ(0);
       setI(i+1);
     }
-    var swap = dataArray[j];
+    
     if(i<size-1 && j<size-i-1){
       if(swap > dataArray[j+1]){
       dataArray[j]=dataArray[j+1];
