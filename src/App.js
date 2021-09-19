@@ -23,9 +23,9 @@ function App() {
   const bubblesort = () => {
     var dataArray = [...array];
     var swap = dataArray[j];
-    
+
     if(j === size-i-1){
-      setJ(0);
+      setJ(0); 
       setI(i+1);
     }
     
@@ -45,11 +45,14 @@ function App() {
 
   const reset = () =>{
     setArray([]);
+    setJ(0); 
+    setI(0);
     document.getElementById('input').value = "";
   }
   return (
     <div>
-      <div className="container">
+      <h1 className="container">Bubble Sort Visualizer</h1>
+      <div className="container">  
         <label className="label">Enter the values as array</label>
         <input id="input" className="input" type="text" onChange={handleChange} />
         <button className="button" onClick={() => bubblesort()}>
