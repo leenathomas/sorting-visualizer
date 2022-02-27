@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { bubbleSort } from "../Sort/Sort";
+import { bubbleSort, selectionSort } from "../Sort/Sort";
+import useTrait from "../useTrait/useTrait";
 import "./Home.css";
 
 let sort = null;
@@ -10,21 +11,23 @@ function Home(props) {
     const [i, setI] = useState(0);
     const [j, setJ] = useState(0);
     const [option, setOption] = useState(null);
+    const min = useTrait(0);
 
     const handleChange = (e) => {
         const str = e.target.value;
         setArray(str.split(",").map((i) => Number(i)));
     };
     useEffect(()=>{
-        if (sort) {
+        if (sort && array?.length) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = setTimeout(() => {
-            sort({ array, setArray, i, j, setI, setJ });
+                sort({ array, setArray, min, i, j, setI, setJ });
             }, 500);
         }
     }, [i,j]);
     const reset = () =>{
         setArray([]);
+        min.set(0);
         setJ(0); 
         setI(0);
         document.getElementById('input').value = "";
@@ -34,7 +37,7 @@ function Home(props) {
             <h1 className="container">Sort Visualizer</h1>
             <div className="options">
                 <button className="button" onClick={() => { sort = bubbleSort; setOption("Bubble Sort")}}>Bubble Sort</button>
-                {/* <button className="button">Selection Sort</button> */}
+                <button className="button" onClick={() => { sort = selectionSort; setOption("Selection Sort")}}>Selection Sort</button>
             </div>
             {option ? <h2 className="container">{option} Visualizer</h2> : ("")}
             <div className="container">
@@ -44,7 +47,10 @@ function Home(props) {
                     className="button" 
                     onClick={() => {
                         if (!sort) alert("Please select option")
-                        else sort({ array, setArray, i, j, setI, setJ }) }
+                        else {
+                            min.set(0);
+                            sort({ array, setArray, min, i, j, setI, setJ }) 
+                    }}
                     }
                 >
                 sort
