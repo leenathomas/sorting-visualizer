@@ -23,11 +23,9 @@ export const bubbleSort = ({ array, setArray, i, j, setI, setJ }) => {
 export const selectionSort = async ({ array, min, setArray, i, j, setI, setJ }) => {
     let dataArray = [...array];
     let size = array.length;
-   
     if (dataArray[j] < dataArray[min.get()]) {
-       min.set(j)
+       min.set(j);
     }
-    console.log(dataArray[j], dataArray[min], min);
     if(j === size-1) {
         let swap = dataArray[i];
         dataArray[i] = dataArray[min.get()];
