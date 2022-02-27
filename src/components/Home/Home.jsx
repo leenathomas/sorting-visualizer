@@ -1,22 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-import BubbleSort from "../Sort/Sort";
+import { bubbleSort } from "../Sort/Sort";
 import "./Home.css";
+
+let sort = null;
 
 function Home(props) {
     const [array, setArray] = useState([]);
     const timeoutRef = useRef();
     const [i, setI] = useState(0);
     const [j, setJ] = useState(0);
+    const [option, setOption] = useState(null);
 
     const handleChange = (e) => {
         const str = e.target.value;
         setArray(str.split(",").map((i) => Number(i)));
     };
     useEffect(()=>{
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = setTimeout(() => {
-          BubbleSort({ array, setArray, i, j, setI, setJ });
-        }, 500); 
+        if (sort) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+            sort({ array, setArray, i, j, setI, setJ });
+            }, 500);
+        }
     }, [i,j]);
     const reset = () =>{
         setArray([]);
@@ -26,11 +31,22 @@ function Home(props) {
     }
     return (
         <div>
-            <h1 className="container">Bubble Sort Visualizer</h1>
-            <div className="container">  
+            <h1 className="container">Sort Visualizer</h1>
+            <div className="options">
+                <button className="button" onClick={() => { sort = bubbleSort; setOption("Bubble Sort")}}>Bubble Sort</button>
+                {/* <button className="button">Selection Sort</button> */}
+            </div>
+            {option ? <h2 className="container">{option} Visualizer</h2> : ("")}
+            <div className="container">
                 <label className="label">Enter the values as array</label>
                 <input id="input" className="input" type="text" onChange={handleChange} />
-                <button className="button" onClick={() => BubbleSort({ array, setArray, i, j, setI, setJ })}>
+                <button 
+                    className="button" 
+                    onClick={() => {
+                        if (!sort) alert("Please select option")
+                        else sort({ array, setArray, i, j, setI, setJ }) }
+                    }
+                >
                 sort
                 </button >
                 <button className="button-secondary" onClick={() => reset()}>

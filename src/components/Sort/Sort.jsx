@@ -1,4 +1,4 @@
-const BubbleSort = ({ array, setArray, i, j, setI, setJ }) => {
+export const bubbleSort = ({ array, setArray, i, j, setI, setJ }) => {
     let dataArray = [...array];
     const size = array.length;
     let swap = dataArray[j];
@@ -19,5 +19,3 @@ const BubbleSort = ({ array, setArray, i, j, setI, setJ }) => {
         }
     }
 }
-
-export default BubbleSort;
