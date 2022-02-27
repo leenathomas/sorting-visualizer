@@ -58,7 +58,7 @@ function App() {
         <button className="button" onClick={() => bubblesort()}>
           sort
         </button >
-        <button className="button" onClick={() => reset()}>
+        <button className="button-secondary" onClick={() => reset()}>
           reset
         </button>
       </div>
