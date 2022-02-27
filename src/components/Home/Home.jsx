@@ -28,6 +28,7 @@ function Home(props) {
     const reset = () =>{
         setArray([]);
         min.set(0);
+        setOption(null);
         setJ(0); 
         setI(0);
         document.getElementById('input').value = "";
