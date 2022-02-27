@@ -1,5 +1,5 @@
 .container{
-  margin-top: 100px;
+  margin-top: 80px;
   display: flex;
   justify-content: center;
   text-align: center;
@@ -14,17 +14,4 @@
   width: 3vw;
   vertical-align:bottom;
   display: inline-block;
-  
-}
-
-.button{
-  margin-left: 50px;
-  background-color: aqua;
-  width: 100px;
-  height: 50px;
-  
-}
-
-.input{
-  margin-left: 50px;
 }
